@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f8f8f4">
+    <meta name="description" content="Publica los beneficios de tu negocio en BuenPlan y administra tus descuentos con sus estadísticas de uso.">
+    <title>BuenPlan | Panel de negocios</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/buenplan.css">
+    <script src="/negocios.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="BuenPlan, inicio"><span class="brand-sun" aria-hidden="true">✳</span> buenplan<span class="brand-dot">.</span></a>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a class="nav-link" href="/">Ver beneficios</a>
+        <a class="nav-link is-active" href="/negocios.html">Panel de negocios</a>
+        <a class="nav-link" href="/#preguntas">Preguntas</a>
+      </nav>
+      <a class="header-cta" href="#publicar">Publicar oferta <span aria-hidden="true">↗</span></a>
+      <div class="user-profile" aria-label="Sesión del negocio">
+        <span class="user-avatar" aria-hidden="true" id="session-avatar">N</span>
+        <span id="session-brand">Negocios</span>
+      </div>
+      <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
+    </header>
+
+    <main>
+      <section class="hero hero--compact">
+        <div class="hero-inner">
+          <p class="hero-kicker"><span class="hero-kicker-star">✳</span> PARA NEGOCIOS</p>
+          <h1>Haz que te descubran.<br><em>Muéstranos tu descuento.</em></h1>
+          <p class="hero-copy">Publica tus beneficios, aparece en el catálogo de BuenPlan y mira cuántas personas los están activando.</p>
+          <div class="hero-actions">
+            <a class="hero-button" href="#publicar">Publicar mi beneficio <span aria-hidden="true">↓</span></a>
+            <a class="hero-button ghost" href="#estadisticas">Ver estadísticas <span aria-hidden="true">↑</span></a>
+          </div>
+          <ul class="hero-proof">
+            <li><strong>0%</strong><span>sin comisión por venta</span></li>
+            <li><strong>Gratis</strong><span>publicar no tiene costo</span></li>
+            <li><strong>Inmediato</strong><span>visible en el catálogo al publicar</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ACCESO -->
+      <section class="auth-section" id="acceso">
+        <div class="auth-tabs" role="tablist" aria-label="Acceso al panel">
+          <button class="auth-tab is-active" id="tab-login" type="button" role="tab" aria-selected="true" aria-controls="auth-forms">Entrar</button>
+          <button class="auth-tab" id="tab-register" type="button" role="tab" aria-selected="false" aria-controls="auth-forms">Crear cuenta</button>
+        </div>
+
+        <div id="auth-forms" class="auth-forms">
+          <form class="auth-card" id="login-form" novalidate>
+            <h2>Entra a tu panel</h2>
+            <label>Nombre del negocio
+              <input name="brand" type="text" placeholder="Café Laurel" required maxlength="60" autocomplete="organization">
+            </label>
+            <label>Contraseña
+              <input name="password" type="password" placeholder="••••••••" required autocomplete="current-password">
+            </label>
+            <button class="redeem-button" type="submit">Entrar <span aria-hidden="true">→</span></button>
+            <p class="form-note" id="login-note" role="status"></p>
+          </form>
+
+          <form class="auth-card is-hidden" id="register-form" novalidate>
+            <h2>Registra tu negocio</h2>
+            <label>Nombre del negocio
+              <input name="brand" type="text" placeholder="Café Laurel" required maxlength="60" autocomplete="organization">
+            </label>
+            <label>Correo de contacto
+              <input name="contact" type="email" placeholder="hola@negocio.com" required maxlength="160" autocomplete="email">
+            </label>
+            <label>Contraseña
+              <input name="password" type="password" placeholder="Mínimo 8 caracteres" required minlength="8" autocomplete="new-password">
+            </label>
+            <button class="redeem-button" type="submit">Crear cuenta <span aria-hidden="true">→</span></button>
+            <p class="form-note" id="register-note" role="status"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- PANEL -->
+      <section class="panel is-hidden" id="panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">ESTADÍSTICAS DE USO</p>
+            <h2>Qué pasa con<br><em>tu beneficio.</em></h2>
+          </div>
+          <div class="panel-head-actions">
+            <p class="section-description" id="panel-summary"></p>
+            <button class="plan-button plan-button--ghost" id="logout-button" type="button">Cerrar sesión</button>
+          </div>
+        </div>
+
+        <div class="stats-band stats-band--tight">
+          <div class="stat"><strong id="biz-total-offers">0</strong><span>beneficios publicados</span></div>
+          <div class="stat"><strong id="biz-total-views">0</strong><span>visitas al catálogo</span></div>
+          <div class="stat"><strong id="biz-total-redemptions">0</strong><span>canjes activados</span></div>
+          <div class="stat stat-note"><span>Las visitas aumentan cada vez que alguien abre la ficha de uno de tus beneficios.</span></div>
+        </div>
+
+        <h3 class="panel-subtitle">Tus beneficios</h3>
+        <div class="manage-list" id="manage-list"></div>
+      </section>
+
+      <!-- PUBLICAR / EDITAR -->
+      <section class="faq-section faq-section--form is-hidden" id="publicar">
+        <div class="faq-heading">
+          <p class="section-kicker" id="form-kicker">PUBLICAR</p>
+          <h2 id="form-title">Tu descuento,<br><em>en un minuto.</em></h2>
+          <p>Describe el beneficio tal como lo aplicarías en el local. Los usuarios ven exactamente lo que escribas aquí.</p>
+          <ul class="how-checks">
+            <li>Publicación inmediata</li>
+            <li>0% de comisión</li>
+            <li>Puedes editar o quitarlo</li>
+          </ul>
+        </div>
+        <form class="offer-form" id="offer-form" novalidate>
+          <div class="form-row">
+            <label>Título del beneficio
+              <input name="title" type="text" placeholder="Un café, el otro va por cuenta nuestra" required maxlength="120">
+            </label>
+            <label>Descuento
+              <input name="discountLabel" type="text" placeholder="2 x 1" required maxlength="20">
+            </label>
+          </div>
+          <div class="form-row">
+            <label>Categoría
+              <input name="category" type="text" placeholder="Gastronomía" maxlength="40">
+            </label>
+            <label>Dónde aplica
+              <input name="location" type="text" placeholder="Centro · 2 sucursales" required maxlength="80">
+            </label>
+          </div>
+          <label>Descripción
+            <textarea name="description" rows="2" placeholder="Qué incluye y por qué conviene." required maxlength="400"></textarea>
+          </label>
+          <label>Condiciones
+            <textarea name="terms" rows="3" placeholder="Días, horarios, monto o producto. Sé claro: se muestra tal cual." required maxlength="600"></textarea>
+          </label>
+          <div class="form-row">
+            <label>Imagen (URL)
+              <input name="imageUrl" type="url" placeholder="https://…" required maxlength="400">
+            </label>
+            <label>Vigente hasta
+              <input name="expiresAt" type="date" required>
+            </label>
+          </div>
+          <div class="form-actions">
+            <button class="redeem-button" id="offer-submit" type="submit">Publicar beneficio <span aria-hidden="true">→</span></button>
+            <button class="plan-button plan-button--ghost is-hidden" id="offer-cancel" type="button">Cancelar edición</button>
+          </div>
+          <p class="form-note" id="form-note" role="status"></p>
+        </form>
+      </section>
+
+      <section class="closing-banner">
+        <div>
+          <p class="section-kicker">¿DUDAS?</p>
+          <h2>Te ayudamos a<br>publicar bien tu oferta.</h2>
+        </div>
+        <a class="closing-link" href="mailto:negocios@buenplan.app">Escribir a negocios <span aria-hidden="true">↗</span></a>
+        <span class="closing-spark" aria-hidden="true">✳</span>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand-block">
+        <a class="brand footer-brand" href="/">buenplan<span class="brand-dot">.</span></a>
+        <span class="footer-tagline">Panel para negocios.</span>
+      </div>
+      <nav class="footer-links" aria-label="Enlaces del pie de página">
+        <div><strong>Explora</strong><a href="/">Todos los beneficios</a><a href="/#destacados">Destacados del mes</a><a href="/#categorias">Por categoría</a></div>
+        <div><strong>BuenPlan</strong><a href="/#como-funciona">Cómo funciona</a><a href="/#planes">Membresía</a><a href="/#preguntas">Preguntas frecuentes</a></div>
+        <div><strong>Negocios</strong><a href="/negocios.html#publicar">Publicar mi oferta</a><a href="/negocios.html#panel">Mis beneficios</a><a href="/#preguntas">Soporte</a></div>
+      </nav>
+      <div class="footer-bottom">
+        <span>© <span id="footer-year">2026</span> BuenPlan. Todos los derechos reservados.</span>
+        <span class="footer-legal"><a href="/#preguntas">Términos</a><a href="/#preguntas">Privacidad</a></span>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

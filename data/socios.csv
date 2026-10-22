@@ -1,0 +1,13 @@
+﻿# Catálogo de negocios socios de BuenPlan
+#
+# Una fila por beneficio. Separa las columnas con ";" y entrecomilla los textos
+# que contengan ";". Las líneas que empiezan con "#" se ignoran.
+#
+# La fila de abajo es un ejemplo del formato. Bórrala y escribe tus negocios.
+#
+# Condiciones: escribe qué días y horarios aplican, qué queda excluido y si es
+# acumulable. Un beneficio claro y acotado es el que no genera quejas.
+#
+# Detalles de cada columna en data/SOCIOS.md
+id;brand;brand_initials;brand_color;title;category;discount_label;description;terms;image_url;location;expires_at;featured
+mi-negocio;Nombre del negocio;MN;#e9d7b4;Frase corta del beneficio;Categoría;20% OFF;Qué incluye el descuento;Días, horarios y exclusiones;https://…;Sucursal o zona;AAAA-MM-DD;0

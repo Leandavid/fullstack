@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f8f8f4">
-    <meta name="description" content="Encuentra descuentos, experiencias y beneficios de marcas que te gustan. Un buen plan cuesta menos.">
-    <title>BuenPlan | Beneficios para disfrutar más</title>
+    <meta name="description" content="Bufet: descuentos, ofertas y beneficios de tus marcas favoritas. Activa tu código al instante y disfruta más pagando menos.">
+    <title>BuenPlan | Descuentos y beneficios para disfrutar más</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
@@ -13,39 +13,140 @@
     <script src="/buenplan.js" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#ofertas">Saltar al catálogo de beneficios</a>
+
     <header class="site-header">
       <a class="brand" href="/" aria-label="BuenPlan, inicio"><span class="brand-sun" aria-hidden="true">✳</span> buenplan<span class="brand-dot">.</span></a>
       <nav class="main-nav" aria-label="Navegación principal">
         <button class="nav-link is-active" type="button" data-view="offers">Descubrir</button>
+        <a class="nav-link" href="#beneficios">Beneficios</a>
+        <a class="nav-link" href="#categorias">Categorías</a>
         <a class="nav-link" href="#como-funciona">Cómo funciona</a>
+        <a class="nav-link" href="#preguntas">Preguntas</a>
         <button class="nav-link" type="button" data-view="redemptions">Mis canjes<span class="redemption-count" id="redemption-count">0</span></button>
       </nav>
       <a class="header-cta" href="#ofertas">Ver beneficios <span aria-hidden="true">↗</span></a>
-      <div class="user-profile" aria-label="Usuario actual"><span class="user-avatar" aria-hidden="true">M</span><span id="current-user-name">mocab</span></div>
+      <div class="user-profile" aria-label="Usuario actual">
+        <span class="user-avatar" aria-hidden="true" id="user-avatar">M</span>
+        <span id="current-user-name">Invitado</span>
+        <button class="user-action" id="user-action" type="button">Entrar</button>
+      </div>
       <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
     </header>
 
     <main>
+      <!-- HERO -->
       <section class="hero" id="hero">
         <img class="hero-image" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=2200&q=90" alt="Café recién preparado en una mesa de madera">
         <div class="hero-shade"></div>
         <div class="hero-inner">
           <p class="hero-kicker"><span class="hero-kicker-star">✳</span> EL CLUB DE LOS BUENOS PLANES</p>
-          <h1>Más de lo que<br>te gusta. <em>Por menos.</em></h1>
-          <p class="hero-copy">Descuentos y beneficios para llenar tu semana de planes que sí se antojan.</p>
-          <a class="hero-button" href="#ofertas">Encuentra tu próximo plan <span aria-hidden="true">↓</span></a>
+          <h1>Todo lo que te gusta.<br>Por <em>mucho menos.</em></h1>
+          <p class="hero-copy">Descuentos reales en restaurantes, cafeteria, cines, peluquerías y experiencias. Activas tu código en un toque y lo usas cuando quieras.</p>
+          <div class="hero-actions">
+            <a class="hero-button" href="#ofertas">Ver todos los descuentos <span aria-hidden="true">↓</span></a>
+            <a class="hero-button ghost" href="#destacados">Solo los destacados <span aria-hidden="true">✳</span></a>
+          </div>
+          <ul class="hero-proof">
+            <li><strong>Gratis</strong><span>sin suscripción ni cuota</span></li>
+            <li><strong>Instantáneo</strong><span>tu código en 1 clic</span></li>
+            <li><strong>Sin letra chica</strong><span>condiciones visibles</span></li>
+          </ul>
           <div class="hero-footnote"><span class="hero-footnote-line"></span> BUENOS LUGARES. MEJORES PRECIOS.</div>
         </div>
-        <div class="hero-side-note"><span>01 — 05</span><span class="hero-side-rule"></span><span>DESCUBRE</span></div>
+        <div class="hero-side-note"><span>01 — 06</span><span class="hero-side-rule"></span><span>DESCUBRE</span></div>
       </section>
 
+      <!-- CIFRAS -->
       <section class="quick-facts" aria-label="Resumen de beneficios">
         <div class="fact-intro"><span class="fact-star" aria-hidden="true">✳</span><span>Un buen plan<br>te queda cerca.</span></div>
         <div class="fact"><strong id="fact-offers">—</strong><span>beneficios para descubrir</span></div>
         <div class="fact"><strong id="fact-categories">—</strong><span>formas de disfrutar</span></div>
+        <div class="fact"><strong id="fact-redemptions">—</strong><span>canjes activados</span></div>
         <div class="fact-note">Planes nuevos,<br><b>cada semana.</b></div>
       </section>
 
+      <section class="stats-band" aria-label="Cifras de BuenPlan">
+        <div class="stat"><strong id="stat-brands">—</strong><span>negocios socios</span></div>
+        <div class="stat"><strong id="stat-discount">—</strong><span>de descuento promedio</span></div>
+        <div class="stat"><strong id="stat-subscribers">—</strong><span>personas en la lista</span></div>
+        <div class="stat stat-note"><span>Los negocios publican sus propias ofertas. Entra, elige tu plan y aprovéchalo.</span></div>
+      </section>
+
+      <!-- BENEFICIOS DE LA PLATAFORMA -->
+      <section class="benefits-section" id="beneficios">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">POR QUÉ TE CONVIENE</p>
+            <h2>Beneficios que se notan<br><em>desde el primer día.</em></h2>
+          </div>
+          <p class="section-description">No acumulamos puntos ni escondemos condiciones. Solo beneficios claros que puedes usar cuando quieras.</p>
+        </div>
+        <div class="benefit-grid">
+          <article class="benefit-card">
+            <span class="benefit-icon" aria-hidden="true">%</span>
+            <h3>Ahorro que se ve</h3>
+            <p>Descuentos de hasta <span id="benefit-max-discount">—</span> en negocios que ya conoces y quieres repetir. Sin acumular puntos ni largas esperas.</p>
+            <span class="benefit-tag">Descuento inmediato</span>
+          </article>
+          <article class="benefit-card">
+            <span class="benefit-icon" aria-hidden="true">⚡</span>
+            <h3>Código en un clic</h3>
+            <p>Activas el beneficio y listo: aparece un código único que muestras al pagar. Sin llamadas, sin formularios, sin apps.</p>
+            <span class="benefit-tag">Al instante</span>
+          </article>
+          <article class="benefit-card">
+            <span class="benefit-icon" aria-hidden="true">♾</span>
+            <h3>Usos ilimitados</h3>
+            <p>Un beneficio no se gasta en un solo uso: mientras siga vigente puedes activarlo las veces que quieras y volver al mismo lugar.</p>
+            <span class="benefit-tag">Repite tu plan</span>
+          </article>
+          <article class="benefit-card">
+            <span class="benefit-icon" aria-hidden="true">◎</span>
+            <h3>Cero costos</h3>
+            <p>Entrar es totalmente gratis. No pedimos tarjeta, no cobramos cuota y no vendemos tus datos a terceros.</p>
+            <span class="benefit-tag">Siempre gratis</span>
+          </article>
+          <article class="benefit-card">
+            <span class="benefit-icon" aria-hidden="true">✓</span>
+            <h3>Condiciones claras</h3>
+            <p>Antes de activar lees el descuento exacto, dónde aplicarlo, hasta cuándo vence y las condiciones que impone el negocio.</p>
+            <span class="benefit-tag">Transparente</span>
+          </article>
+          <article class="benefit-card">
+            <span class="benefit-icon" aria-hidden="true">✳</span>
+            <h3>Catálogo en crecimiento</h3>
+            <p>Los negocios publican sus propios beneficios desde el panel, así que el catálogo crece sin que tengas que buscar en otro lado.</p>
+            <span class="benefit-tag">Actualizado</span>
+          </article>
+        </div>
+      </section>
+
+      <!-- CATEGORÍAS -->
+      <section class="categories-section" id="categorias">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">ELIGE TU RINCÓN</p>
+            <h2>Descuentos por<br><em>categoría.</em></h2>
+          </div>
+          <p class="section-description">Toca una categoría y filtramos el catálogo al instante.</p>
+        </div>
+        <div class="category-showcase" id="category-showcase" aria-live="polite" aria-busy="true"></div>
+      </section>
+
+      <!-- DESTACADOS -->
+      <section class="featured-section" id="destacados">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">LOS MÁS AMADOS</p>
+            <h2>Los descuentos que<br><em>todo el mundo usa.</em></h2>
+          </div>
+          <p class="section-description">Los beneficios más activados del mes, seleccionados por la comunidad.</p>
+        </div>
+        <div class="featured-track" id="featured-track" aria-live="polite"></div>
+      </section>
+
+      <!-- CATÁLOGO -->
       <section class="offers-section" id="ofertas">
         <div class="section-heading">
           <div><p class="section-kicker">TUS PRÓXIMOS FAVORITOS</p><h2 id="offers-title">Buenos planes, <em>mejor precio.</em></h2></div>
@@ -54,15 +155,34 @@
 
         <div class="catalog-toolbar">
           <div class="category-filters" id="category-filters" aria-label="Filtrar por categoría"></div>
-          <label class="search-field"><span class="search-glass" aria-hidden="true"></span><input id="offer-search" type="search" placeholder="Busca una marca o un plan" autocomplete="off"><kbd>/</kbd></label>
+          <div class="catalog-tools">
+            <select class="sort-field" id="offer-sort" aria-label="Ordenar beneficios">
+              <option value="default">Orden: recomendados</option>
+              <option value="featured">Destacados primero</option>
+              <option value="az">Nombre A–Z</option>
+              <option value="category">Por categoría</option>
+            </select>
+            <label class="search-field"><span class="search-glass" aria-hidden="true"></span><input id="offer-search" type="search" placeholder="Busca una marca o un plan" autocomplete="off"><kbd>/</kbd></label>
+          </div>
         </div>
 
         <p class="result-line" id="result-line" aria-live="polite">Cargando beneficios...</p>
         <div class="offer-grid" id="offer-grid" aria-live="polite" aria-busy="true"></div>
+        <button class="load-more" id="load-more" type="button" hidden>Ver más beneficios <span aria-hidden="true">↓</span></button>
       </section>
 
+      <!-- CÓMO FUNCIONA -->
       <section class="how-section" id="como-funciona">
-        <div class="how-heading"><p class="section-kicker">ASÍ DE FÁCIL</p><h2>El plan es tuyo.<br><em>El descuento también.</em></h2><p>Sin puntos que juntar ni letras chiquitas escondidas. Solo beneficios para usar.</p></div>
+        <div class="how-heading">
+          <p class="section-kicker">ASÍ DE FÁCIL</p>
+          <h2>El plan es tuyo.<br><em>El descuento también.</em></h2>
+          <p>Sin puntos que juntar ni letras chiquitas escondidas. Solo beneficios para usar.</p>
+          <ul class="how-checks">
+            <li>Sin tarjeta de crédito</li>
+            <li>Sin cuota mensual</li>
+            <li>Cancelación automática</li>
+          </ul>
+        </div>
         <div class="steps">
           <article class="step"><span class="step-number">01</span><span class="step-icon step-search" aria-hidden="true"></span><h3>Encuentra</h3><p>Explora tus marcas, lugares y experiencias favoritas.</p></article>
           <article class="step"><span class="step-number">02</span><span class="step-icon step-ticket" aria-hidden="true"></span><h3>Activa</h3><p>Abre el beneficio y genera tu código en un toque.</p></article>
@@ -71,14 +191,185 @@
         <span class="how-decoration" aria-hidden="true">b.</span>
       </section>
 
-      <section class="closing-banner">
-        <div><p class="section-kicker">QUE NO SE TE PASE NINGUNO</p><h2>Algo bueno te<br>está esperando.</h2></div>
+      <!-- PLANES -->
+      <section class="plans-section" id="planes">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">CUÁNTO CUESTA</p>
+            <h2>Gratis de verdad,<br><em>sin letra chica.</em></h2>
+          </div>
+          <p class="section-description">Todo es gratis para quien compra. Los negocios publican sin costo y sin comisión.</p>
+        </div>
+        <div class="plans-grid">
+          <article class="plan-card">
+            <h3>Explorar</h3>
+            <p class="plan-price"><strong>$0</strong><span>sin cuenta</span></p>
+            <ul class="plan-features">
+              <li>Catálogo completo de beneficios</li>
+              <li>Busca por marca o por plan</li>
+              <li>Filtra por categoría</li>
+            </ul>
+            <a class="plan-button" href="#ofertas">Explorar beneficios</a>
+          </article>
+          <article class="plan-card is-highlight">
+            <span class="plan-flag">Lo más usado</span>
+            <h3>Guardar códigos</h3>
+            <p class="plan-price"><strong>$0</strong><span>sin cuota, sin tarjeta</span></p>
+            <ul class="plan-features">
+              <li>Activa códigos ilimitados</li>
+              <li>Descuentos de hasta <span id="plan-max-discount">—</span></li>
+              <li>Tus canjes siempre a la mano</li>
+            </ul>
+            <a class="plan-button" href="#ofertas">Empezar gratis</a>
+          </article>
+          <article class="plan-card">
+            <h3>Negocios</h3>
+            <p class="plan-price"><strong>0%</strong><span>comisión por venta</span></p>
+            <ul class="plan-features">
+              <li>Publica tus beneficios</li>
+              <li>Perfil de marca verificado</li>
+              <li>Estadísticas de visitas y canjes</li>
+            </ul>
+            <a class="plan-button" href="/negocios.html">Abrir panel de negocios</a>
+          </article>
+        </div>
+      </section>
+
+      <!-- MARCAS DESTACADAS -->
+      <section class="voices-section" id="destacadas">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">MARCAS EN BUENPLAN</p>
+            <h2>Negocios que ya<br><em>dan mejor precio.</em></h2>
+          </div>
+          <p class="section-description">Ordenados por cantidad de canjes activados en BuenPlan.</p>
+        </div>
+        <div class="brands-grid" id="brands-grid" aria-live="polite" aria-busy="true"></div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="faq-section" id="preguntas">
+        <div class="faq-heading">
+          <p class="section-kicker">DUDAS FRECUENTES</p>
+          <h2>Todo claro,<br><em>como debe ser.</em></h2>
+          <p>Si te queda alguna duda, escríbenos y la resolvemos en menos de 24 horas.</p>
+          <a class="faq-contact" href="#contacto">Contactar soporte <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>¿Cuánto cuesta ser miembro?<span class="faq-mark" aria-hidden="true"></span></summary>
+            <p>Nada. El acceso es gratuito y no pedimos tarjeta de crédito. Todos los beneficios del catálogo están disponibles sin costo.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿El descuento se puede usar más de una vez?<span class="faq-mark" aria-hidden="true"></span></summary>
+            <p>Sí, mientras el beneficio siga vigente. Puedes activar el mismo código cuantas veces quieras hasta la fecha de vencimiento que aparece en el detalle.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Cómo muestro mi descuento en el local?<span class="faq-mark" aria-hidden="true"></span></summary>
+            <p>Activas el beneficio, copias el código y lo presentas al momento de pagar, antes de que te cobren. También puedes mostrarlo desde la pantalla de tu celular.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Los códigos caducan?<span class="faq-mark" aria-hidden="true"></span></summary>
+            <p>Sí. Cada beneficio tiene su propia fecha de vigencia y la verás escrita en la ficha antes de activar, junto con las condiciones exactas del descuento. Cuando un beneficio vence, deja de aparecer en el catálogo.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Puedo usarlo en cualquier ciudad?<span class="faq-mark" aria-hidden="true"></span></summary>
+            <p>No necesariamente. Cada beneficio indica en qué local, sucursal o zona aplica: puede ser “en línea y tienda”, una dirección concreta o “en locales participantes”. Esa información está siempre visible en la ficha del beneficio.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Necesito registrarme para ver los descuentos?<span class="faq-mark" aria-hidden="true"></span></summary>
+            <p>No. Puedes explorar, buscar y filtrar todo el catálogo sin cuenta. El perfil local solo se usa para guardar los códigos que activas y poder verlos después en “Mis canjes”.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Y si el local no me reconoce el código?<span class="faq-mark" aria-hidden="true"></span></summary>
+            <p>Revisa que el beneficio siga vigente y que la compra califique en las condiciones (días, horarios, monto o producto). Si el local no reconoce el descuento, escríbenos con tu código y lo revisamos contigo.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Puedo cancelar los avisos que me envían?<span class="faq-mark" aria-hidden="true"></span></summary>
+            <p>Sí. Escríbenos desde el correo al que te avisamos y lo eliminamos de la lista en el mismo día. Solo escribimos cuando publicamos novedades y nunca compartimos tu dirección con terceros.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- CIERRE + NEWSLETTER -->
+      <section class="closing-banner" id="contacto">
+        <div>
+          <p class="section-kicker">QUE NO SE TE PASE NINGUNO</p>
+          <h2>Te avisamos cuando<br>llegue un buen plan.</h2>
+        </div>
+        <form class="subscribe" id="subscribe-form" novalidate>
+          <label class="subscribe-label" for="subscribe-email">Un correo y nada más. Máximo dos avisos por semana.</label>
+          <div class="subscribe-row">
+            <input id="subscribe-email" type="email" placeholder="tu@correo.com" autocomplete="email" required>
+            <button type="submit">Quiero ofertas <span aria-hidden="true">→</span></button>
+          </div>
+          <p class="subscribe-note" id="subscribe-note" role="status"></p>
+        </form>
         <a class="closing-link" href="#ofertas">Explora los beneficios <span aria-hidden="true">↗</span></a>
         <span class="closing-spark" aria-hidden="true">✳</span>
       </section>
     </main>
 
-    <footer class="site-footer"><a class="brand footer-brand" href="/">buenplan<span class="brand-dot">.</span></a><span>Descuentos para disfrutar más.</span><a href="#ofertas">Ver beneficios ↑</a></footer>
+    <footer class="site-footer">
+      <div class="footer-brand-block">
+        <a class="brand footer-brand" href="/">buenplan<span class="brand-dot">.</span></a>
+        <span class="footer-tagline">Descuentos y beneficios para disfrutar más.</span>
+      </div>
+      <nav class="footer-links" aria-label="Enlaces del pie de página">
+        <div><strong>Explora</strong><a href="#ofertas">Todos los beneficios</a><a href="#destacados">Destacados del mes</a><a href="#categorias">Por categoría</a></div>
+        <div><strong>BuenPlan</strong><a href="#como-funciona">Cómo funciona</a><a href="#planes">Membresía</a><a href="#preguntas">Preguntas frecuentes</a></div>
+        <div><strong>Negocios</strong><a href="#contacto">Publicar mi oferta</a><a href="#destacadas">Marcas asociadas</a><a href="#preguntas">Soporte</a></div>
+      </nav>
+      <div class="footer-bottom">
+        <span>© <span id="footer-year">2026</span> BuenPlan. Todos los derechos reservados.</span>
+        <span class="footer-legal"><a href="#preguntas">Términos</a><a href="#preguntas">Privacidad</a></span>
+      </div>
+    </footer>
+
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Volver arriba">↑</button>
+    <a class="mobile-cta" href="#ofertas">Ver descuentos <span aria-hidden="true">↓</span></a>
+
+    <dialog class="auth-dialog" id="auth-dialog" aria-labelledby="auth-title">
+      <button class="dialog-close" id="auth-close" type="button" aria-label="Cerrar">×</button>
+      <div class="auth-dialog-body">
+        <h2 id="auth-title">Entra a BuenPlan</h2>
+        <p class="auth-dialog-copy">Con una cuenta, tus códigos quedan guardados y los ves desde cualquier dispositivo.</p>
+        <div class="auth-tabs" role="tablist" aria-label="Acceso">
+          <button class="auth-tab is-active" id="user-tab-login" type="button" role="tab" aria-selected="true">Entrar</button>
+          <button class="auth-tab" id="user-tab-register" type="button" role="tab" aria-selected="false">Crear cuenta</button>
+        </div>
+
+        <form class="auth-card" id="user-login-form" novalidate>
+          <label>Usuario o correo
+            <input name="username" type="text" placeholder="tu-usuario o tu@correo.com" autocomplete="username" required maxlength="160">
+          </label>
+          <label>Contraseña
+            <input name="password" type="password" placeholder="••••••••" autocomplete="current-password" required>
+          </label>
+          <button class="redeem-button" type="submit">Entrar <span aria-hidden="true">→</span></button>
+          <p class="form-note" id="user-login-note" role="status"></p>
+        </form>
+
+        <form class="auth-card is-hidden" id="user-register-form" novalidate>
+          <label>Tu nombre
+            <input name="displayName" type="text" placeholder="Mocab" autocomplete="name" maxlength="60">
+          </label>
+          <label>Usuario
+            <input name="username" type="text" placeholder="tu-usuario" autocomplete="username" required maxlength="30">
+          </label>
+          <label>Correo
+            <input name="email" type="email" placeholder="tu@correo.com" autocomplete="email" required maxlength="160">
+          </label>
+          <label>Contraseña
+            <input name="password" type="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password" required minlength="8">
+          </label>
+          <button class="redeem-button" type="submit">Crear cuenta <span aria-hidden="true">→</span></button>
+          <p class="form-note" id="user-register-note" role="status"></p>
+        </form>
+
+        <button class="logout-button is-hidden" id="user-logout" type="button">Cerrar sesión</button>
+      </div>
+    </dialog>
 
     <dialog class="offer-dialog" id="offer-dialog" aria-labelledby="dialog-title">
       <button class="dialog-close" id="dialog-close" type="button" aria-label="Cerrar">×</button>
@@ -88,6 +379,7 @@
         <p class="dialog-category" id="dialog-category"></p>
         <h2 id="dialog-title"></h2>
         <p class="dialog-description" id="dialog-description"></p>
+        <ul class="dialog-perks" id="dialog-perks"></ul>
         <div class="terms-box"><strong>Condiciones del beneficio</strong><p id="dialog-terms"></p><span class="expiry-line" id="dialog-expiry"></span></div>
         <div class="redeem-result" id="redeem-result" hidden><span>Tu código BuenPlan</span><div><strong id="redeem-code"></strong><button id="copy-code" type="button">Copiar</button></div><p>Muéstralo al momento de pagar para activar tu beneficio.</p></div>
         <button class="redeem-button" id="redeem-button" type="button">Obtener mi beneficio <span aria-hidden="true">→</span></button>

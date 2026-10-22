@@ -1,0 +1,11 @@
+# Variables de entorno con credenciales
+.env
+.env.local
+
+# Dependencias
+node_modules/
+
+# Artefactos del sistema
+.DS_Store
+Thumbs.db
+*.log
