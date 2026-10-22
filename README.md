@@ -59,6 +59,8 @@ Comprueba la conexión en [http://localhost:3000/api/health](http://localhost:30
 
 ## Cargar negocios socios
 
+> El repositorio incluye **27 beneficios de demostración** en `data/socios.csv` (negocios y fotos de ejemplo) para que el catálogo y el diseño se vean completos desde el primer arranque. Reemplazalos por acuerdos reales antes de publicar el sitio.
+
 El catálogo se carga desde `data/socios.csv` con los negocios con los que tienes acuerdo:
 
 ```powershell

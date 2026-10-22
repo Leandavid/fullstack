@@ -2,6 +2,8 @@
 
 `data/socios.csv` es el archivo donde declaras los negocios con los que tienes acuerdo y el descuento que ofrecen. Está separado del código: cuando cambies una promoción, editas el CSV y recargas, sin tocar JavaScript.
 
+> El archivo viene con **27 beneficios de demostración** para probar el catálogo y el diseño. Los negocios, direcciones y fotos son ejemplos: reemplazalos por tus acuerdos reales antes de publicar.
+
 ## Formato
 
 Una fila por beneficio. Los campos van separados por `;` y los textos que contengan `;` deben ir entre comillas.

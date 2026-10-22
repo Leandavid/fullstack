@@ -3,11 +3,15 @@ const offerDialog = document.querySelector('#offer-dialog');
 const categoryFilters = document.querySelector('#category-filters');
 const categoryShowcase = document.querySelector('#category-showcase');
 const featuredTrack = document.querySelector('#featured-track');
+const heroTicket = document.querySelector('#hero-ticket');
+const spotlightSection = document.querySelector('#spotlight-section');
+const spotlight = document.querySelector('#spotlight');
+const brandMarquee = document.querySelector('#brand-marquee');
 const loadMoreButton = document.querySelector('#load-more');
 const sortSelect = document.querySelector('#offer-sort');
 const backToTop = document.querySelector('#back-to-top');
 const localCanjesKey = 'buenplan-canjes';
-const PAGE_SIZE = 9;
+const PAGE_SIZE = 27;
 
 const state = {
   view: 'offers',
@@ -25,6 +29,30 @@ const state = {
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
+}
+
+const shortDateFormatter = new Intl.DateTimeFormat('es', { day: 'numeric', month: 'short' });
+
+function shortDate(value) {
+  const date = new Date(`${value}T12:00:00`);
+  return Number.isNaN(date.getTime()) ? value : shortDateFormatter.format(date);
+}
+
+/** Foto con carga diferida y placeholder limpio si la URL falla. */
+function offerImage(offer) {
+  return `<img src="${escapeHtml(offer.image_url)}" alt="${escapeHtml(`${offer.brand}: ${offer.title}`)}" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
+}
+
+function skeletonMarkup(count) {
+  return Array.from({ length: count }, (_, index) => `
+    <div class="skeleton-card" aria-hidden="true" style="animation-delay:${index * 45}ms">
+      <div class="skeleton-photo"></div>
+      <div class="skeleton-copy">
+        <span class="skeleton-line is-short"></span>
+        <span class="skeleton-line"></span>
+        <span class="skeleton-line is-medium"></span>
+      </div>
+    </div>`).join('');
 }
 
 function getCanjes() {
@@ -56,6 +84,7 @@ async function api(url, options) {
 
 async function loadOffers() {
   offerGrid.setAttribute('aria-busy', 'true');
+  if (!offerGrid.children.length) offerGrid.innerHTML = skeletonMarkup(PAGE_SIZE);
   const parameters = new URLSearchParams();
   if (state.category) parameters.set('category', state.category);
   if (state.search) parameters.set('search', state.search);
@@ -70,6 +99,9 @@ async function loadOffers() {
     renderCategories();
     renderCategoryShowcase();
     renderFeatured();
+    renderHeroTicket();
+    renderSpotlight();
+    renderMarquee();
     renderOffers();
     document.querySelector('#fact-offers').textContent = categories.reduce((sum, item) => sum + item.count, 0);
     document.querySelector('#fact-categories').textContent = categories.length;
@@ -141,10 +173,11 @@ brandsGrid.addEventListener('keydown', (event) => {
 
 function bestDiscountLabel(stats) {
   const parts = [];
-  if (stats.maxDiscount > 0) parts.push(`${stats.maxDiscount}%`);
+  if (stats.maxDiscount > 0) parts.push(`${stats.maxDiscount}% OFF`);
   if (stats.hasTwoForOne) parts.push('2x1');
   if (stats.hasFree) parts.push('gratis');
-  return parts.length ? parts.join(', ') : 'descuentos reales';
+  if (!parts.length) return 'descuentos reales';
+  return parts.length === 1 ? parts[0] : `${parts.slice(0, -1).join(', ')} y ${parts[parts.length - 1]}`;
 }
 
 async function loadStats() {
@@ -171,10 +204,11 @@ function renderCategoryShowcase() {
   const tiles = state.categories
     .filter((item) => byCategory.has(item.category))
     .slice(0, 8)
-    .map(({ category, count }) => {
+    .map(({ category, count }, index) => {
       const offer = byCategory.get(category);
-      return `<button class="category-tile" type="button" data-category-tile="${escapeHtml(category)}">
-        <img src="${escapeHtml(offer.image_url)}" alt="" loading="lazy">
+      return `<button class="category-tile${index === 0 ? ' is-lead' : ''}" type="button" data-category-tile="${escapeHtml(category)}" aria-label="Ver beneficios de ${escapeHtml(category)}">
+        <img src="${escapeHtml(offer.image_url)}" alt="" loading="lazy" decoding="async" onerror="this.style.display='none'">
+        <i class="category-tile-index" aria-hidden="true">0${index + 1}</i>
         <b>${count} ${count === 1 ? 'beneficio' : 'beneficios'}</b>
         <strong>${escapeHtml(category)}</strong>
         <span>Ver descuentos →</span>
@@ -191,17 +225,83 @@ function renderFeatured() {
     ? list.map((offer) => `
       <article class="featured-card" data-offer-id="${escapeHtml(offer.id)}" tabindex="0" role="button">
         <div class="featured-photo">
-          <img src="${escapeHtml(offer.image_url)}" alt="${escapeHtml(offer.brand)}" loading="lazy">
+          ${offerImage(offer)}
           <span class="offer-badge">${escapeHtml(offer.discount_label)}</span>
+          <div class="offer-photo-meta"><span class="offer-category-pill">${escapeHtml(offer.category)}</span><span class="offer-place">⌖ ${escapeHtml(offer.location)}</span></div>
         </div>
         <div class="featured-copy">
-          <div class="offer-brand-row"><span class="brand-avatar" style="background:${escapeHtml(offer.brand_color)}">${escapeHtml(offer.brand_initials)}</span><span class="offer-brand">${escapeHtml(offer.brand)}</span><span class="offer-category">${escapeHtml(offer.category)}</span></div>
+          <div class="offer-brand-row"><span class="brand-avatar" style="background:${escapeHtml(offer.brand_color)}">${escapeHtml(offer.brand_initials)}</span><span class="offer-brand">${escapeHtml(offer.brand)}</span></div>
           <h3>${escapeHtml(offer.title)}</h3>
           <p>${escapeHtml(offer.description)}</p>
-          <div class="featured-foot"><span>⌖ ${escapeHtml(offer.location)}</span><b>Activar →</b></div>
+          <div class="featured-foot"><span>Hasta el ${escapeHtml(shortDate(offer.expires_at))}</span><b>Activar →</b></div>
         </div>
       </article>`).join('')
     : '<p class="featured-empty">Todavía no hay destacados publicados.</p>';
+}
+
+function pickHeroOffer() {
+  return state.allOffers.find((offer) => offer.featured) || state.allOffers[0] || null;
+}
+
+function renderHeroTicket() {
+  if (!heroTicket) return;
+  const offer = pickHeroOffer();
+  if (!offer) {
+    heroTicket.hidden = true;
+    return;
+  }
+  heroTicket.hidden = false;
+  heroTicket.dataset.offerId = offer.id;
+  heroTicket.innerHTML = `
+    <span class="hero-ticket-kicker">BENEFICIO DESTACADO</span>
+    <strong>${escapeHtml(offer.discount_label)}</strong>
+    <span class="hero-ticket-brand">${escapeHtml(offer.brand)}</span>
+    <span class="hero-ticket-title">${escapeHtml(offer.title)}</span>
+    <span class="hero-ticket-cta">Ver condiciones <b aria-hidden="true">→</b></span>`;
+}
+
+function renderSpotlight() {
+  if (!spotlightSection || !spotlight) return;
+  const offer = pickHeroOffer();
+  if (!offer) {
+    spotlightSection.hidden = true;
+    spotlight.innerHTML = '';
+    return;
+  }
+  spotlightSection.hidden = false;
+  spotlight.innerHTML = `
+    <article class="spotlight" style="--brand:${escapeHtml(offer.brand_color)}">
+      <div class="spotlight-media">
+        ${offerImage(offer)}
+        <span class="spotlight-badge">${escapeHtml(offer.discount_label)}</span>
+        <div class="spotlight-media-foot"><span class="offer-category-pill">${escapeHtml(offer.category)}</span><span>⌖ ${escapeHtml(offer.location)}</span></div>
+      </div>
+      <div class="spotlight-body">
+        <div class="offer-brand-row"><span class="brand-avatar" style="background:${escapeHtml(offer.brand_color)}">${escapeHtml(offer.brand_initials)}</span><span class="offer-brand">${escapeHtml(offer.brand)}</span></div>
+        <h3>${escapeHtml(offer.title)}</h3>
+        <p>${escapeHtml(offer.description)}</p>
+        <ul class="spotlight-perks">
+          <li><b>Vence</b><span>${escapeHtml(shortDate(offer.expires_at))}</span></li>
+          <li><b>Dónde</b><span>${escapeHtml(offer.location)}</span></li>
+          <li><b>Canje</b><span>Ilimitado hasta vencer</span></li>
+        </ul>
+        <div class="spotlight-actions">
+          <button class="spotlight-cta" type="button" data-offer-id="${escapeHtml(offer.id)}">Activar beneficio <span aria-hidden="true">→</span></button>
+          <span>Sin tarjeta · código al instante</span>
+        </div>
+      </div>
+    </article>`;
+}
+
+function renderMarquee() {
+  if (!brandMarquee) return;
+  const names = [...new Set(state.offers.map((offer) => offer.brand))].slice(0, 14);
+  if (!names.length) {
+    brandMarquee.innerHTML = '';
+    return;
+  }
+  const group = names.map((name) => `<span>${escapeHtml(name)}</span><i aria-hidden="true">✳</i>`).join('');
+  brandMarquee.innerHTML = `<div class="marquee-group">${group}</div><div class="marquee-group" aria-hidden="true">${group}</div>`;
 }
 
 async function loadCurrentUser() {
@@ -336,7 +436,7 @@ function renderCategories() {
 }
 
 function renderOffers() {
-  const marketingSections = ['#hero', '.quick-facts', '.stats-band', '#beneficios', '#categorias', '#destacados', '#como-funciona', '#planes', '#destacadas', '#preguntas', '.closing-banner', '.catalog-toolbar'];
+  const marketingSections = ['#hero', '.quick-facts', '.stats-band', '.marquee-band', '#beneficios', '#categorias', '#spotlight-section', '#destacados', '#como-funciona', '#planes', '#destacadas', '#preguntas', '.closing-banner', '.catalog-toolbar'];
   marketingSections.forEach((selector) => document.querySelector(selector)?.classList.toggle('view-hidden', state.view !== 'offers'));
   document.querySelector('#offers-title').innerHTML = state.view === 'offers' ? 'Buenos planes, <em>mejor precio.</em>' : 'Tus beneficios <em>guardados.</em>';
   document.querySelector('#offers-description').textContent = state.view === 'offers'
@@ -374,17 +474,22 @@ function renderOffers() {
 }
 
 function offerMarkup(offer, index) {
-  return `<article class="offer-card" style="animation-delay:${Math.min(index * 35, 210)}ms">
+  return `<article class="offer-card" style="--brand:${escapeHtml(offer.brand_color)};animation-delay:${Math.min(index * 35, 210)}ms">
     <div class="offer-photo">
-      <img src="${escapeHtml(offer.image_url)}" alt="${escapeHtml(offer.brand)}" loading="lazy">
+      ${offerImage(offer)}
       ${offer.featured ? '<span class="featured-label"><span aria-hidden="true">✳</span> FAVORITO</span>' : ''}
       <span class="offer-badge">${escapeHtml(offer.discount_label)}</span>
+      <div class="offer-photo-meta"><span class="offer-category-pill">${escapeHtml(offer.category)}</span><span class="offer-place">⌖ ${escapeHtml(offer.location)}</span></div>
     </div>
     <div class="offer-copy">
-      <div class="offer-brand-row"><span class="brand-avatar" style="background:${escapeHtml(offer.brand_color)}">${escapeHtml(offer.brand_initials)}</span><span class="offer-brand">${escapeHtml(offer.brand)}</span><span class="offer-category">${escapeHtml(offer.category)}</span></div>
+      <div class="offer-brand-row"><span class="brand-avatar" style="background:${escapeHtml(offer.brand_color)}">${escapeHtml(offer.brand_initials)}</span><span class="offer-brand">${escapeHtml(offer.brand)}</span></div>
       <h3>${escapeHtml(offer.title)}</h3>
       <p>${escapeHtml(offer.description)}</p>
-      <div class="offer-card-bottom"><span class="offer-location">⌖ &nbsp;${escapeHtml(offer.location)}</span><button class="offer-open" data-offer-id="${escapeHtml(offer.id)}" type="button">Ver beneficio <span aria-hidden="true">→</span></button></div>
+      <ul class="offer-perks">
+        <li>Vence el ${escapeHtml(shortDate(offer.expires_at))}</li>
+        <li>${offer.featured ? 'Destacado del mes' : 'Código al instante'}</li>
+      </ul>
+      <div class="offer-card-bottom"><span class="offer-location">Canje ilimitado</span><button class="offer-open" data-offer-id="${escapeHtml(offer.id)}" type="button">Ver beneficio <span aria-hidden="true">→</span></button></div>
     </div>
   </article>`;
 }
@@ -498,6 +603,26 @@ featuredTrack.addEventListener('keydown', (event) => {
   const offer = state.allOffers.find((item) => item.id === card.dataset.offerId);
   if (offer) openOffer(offer);
 });
+
+function offerById(id) {
+  return state.offers.find((item) => item.id === id) || state.allOffers.find((item) => item.id === id);
+}
+
+heroTicket?.addEventListener('click', () => {
+  const offer = offerById(heroTicket.dataset.offerId);
+  if (offer) openOffer(offer);
+});
+
+spotlightSection?.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-offer-id]');
+  if (!button) return;
+  const offer = offerById(button.dataset.offerId);
+  if (offer) openOffer(offer);
+});
+
+const scrollFeatured = (direction) => featuredTrack.scrollBy({ left: direction * 300, behavior: 'smooth' });
+document.querySelector('#featured-prev')?.addEventListener('click', () => scrollFeatured(-1));
+document.querySelector('#featured-next')?.addEventListener('click', () => scrollFeatured(1));
 
 document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => setView(button.dataset.view)));
 document.querySelectorAll('a[href^="#"]').forEach((link) => link.addEventListener('click', () => {

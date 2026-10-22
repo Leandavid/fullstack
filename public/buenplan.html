@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f8f8f4">
     <meta name="description" content="Bufet: descuentos, ofertas y beneficios de tus marcas favoritas. Activa tu código al instante y disfruta más pagando menos.">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="BuenPlan">
+    <meta property="og:title" content="BuenPlan | Descuentos y beneficios para disfrutar más">
+    <meta property="og:description" content="Descuentos reales en restaurantes, cafeterías, cines, peluquerías y experiencias. Tu código en un clic, sin letra chica.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80">
+    <meta name="twitter:card" content="summary_large_image">
     <title>BuenPlan | Descuentos y beneficios para disfrutar más</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,6 +62,7 @@
           <div class="hero-footnote"><span class="hero-footnote-line"></span> BUENOS LUGARES. MEJORES PRECIOS.</div>
         </div>
         <div class="hero-side-note"><span>01 — 06</span><span class="hero-side-rule"></span><span>DESCUBRE</span></div>
+        <button class="hero-ticket" id="hero-ticket" type="button" hidden></button>
       </section>
 
       <!-- CIFRAS -->
@@ -73,6 +81,10 @@
         <div class="stat stat-note"><span>Los negocios publican sus propias ofertas. Entra, elige tu plan y aprovéchalo.</span></div>
       </section>
 
+      <div class="marquee-band" aria-hidden="true">
+        <div class="marquee-track" id="brand-marquee"></div>
+      </div>
+
       <!-- BENEFICIOS DE LA PLATAFORMA -->
       <section class="benefits-section" id="beneficios">
         <div class="section-heading">
@@ -80,43 +92,49 @@
             <p class="section-kicker">POR QUÉ TE CONVIENE</p>
             <h2>Beneficios que se notan<br><em>desde el primer día.</em></h2>
           </div>
-          <p class="section-description">No acumulamos puntos ni escondemos condiciones. Solo beneficios claros que puedes usar cuando quieras.</p>
+          <p class="section-description">No acumulamos puntos ni escondemos condiciones. Cada beneficio muestra su descuento, sus condiciones y su fecha de vigencia.</p>
         </div>
         <div class="benefit-grid">
           <article class="benefit-card">
+            <span class="benefit-index" aria-hidden="true">01</span>
             <span class="benefit-icon" aria-hidden="true">%</span>
             <h3>Ahorro que se ve</h3>
-            <p>Descuentos de hasta <span id="benefit-max-discount">—</span> en negocios que ya conoces y quieres repetir. Sin acumular puntos ni largas esperas.</p>
-            <span class="benefit-tag">Descuento inmediato</span>
+            <p>Beneficios como <span id="benefit-max-discount">descuentos reales</span> en negocios que ya conoces y quieres repetir. Sin juntar puntos ni esperar a que salga una oferta.</p>
+            <span class="benefit-tag">Ahorro real</span>
           </article>
           <article class="benefit-card">
+            <span class="benefit-index" aria-hidden="true">02</span>
             <span class="benefit-icon" aria-hidden="true">⚡</span>
             <h3>Código en un clic</h3>
-            <p>Activas el beneficio y listo: aparece un código único que muestras al pagar. Sin llamadas, sin formularios, sin apps.</p>
+            <p>Activas el beneficio y aparece un código único para mostrar al pagar. Sin llamadas, sin formularios y sin instalar nada.</p>
             <span class="benefit-tag">Al instante</span>
           </article>
           <article class="benefit-card">
+            <span class="benefit-index" aria-hidden="true">03</span>
             <span class="benefit-icon" aria-hidden="true">♾</span>
             <h3>Usos ilimitados</h3>
-            <p>Un beneficio no se gasta en un solo uso: mientras siga vigente puedes activarlo las veces que quieras y volver al mismo lugar.</p>
+            <p>Mientras el beneficio siga vigente, puedes volver al mismo lugar y generar un código nuevo cada vez. Sin límite de usos.</p>
             <span class="benefit-tag">Repite tu plan</span>
           </article>
           <article class="benefit-card">
+            <span class="benefit-index" aria-hidden="true">04</span>
             <span class="benefit-icon" aria-hidden="true">◎</span>
             <h3>Cero costos</h3>
-            <p>Entrar es totalmente gratis. No pedimos tarjeta, no cobramos cuota y no vendemos tus datos a terceros.</p>
+            <p>Usar BuenPlan es gratis: no pedimos tarjeta, no cobramos cuota y no hay cargos escondidos.</p>
             <span class="benefit-tag">Siempre gratis</span>
           </article>
           <article class="benefit-card">
+            <span class="benefit-index" aria-hidden="true">05</span>
             <span class="benefit-icon" aria-hidden="true">✓</span>
             <h3>Condiciones claras</h3>
-            <p>Antes de activar lees el descuento exacto, dónde aplicarlo, hasta cuándo vence y las condiciones que impone el negocio.</p>
+            <p>Antes de activar ves el descuento exacto, dónde se aplica, hasta cuándo vale y qué queda excluido. Sin sorpresas al pagar.</p>
             <span class="benefit-tag">Transparente</span>
           </article>
           <article class="benefit-card">
+            <span class="benefit-index" aria-hidden="true">06</span>
             <span class="benefit-icon" aria-hidden="true">✳</span>
             <h3>Catálogo en crecimiento</h3>
-            <p>Los negocios publican sus propios beneficios desde el panel, así que el catálogo crece sin que tengas que buscar en otro lado.</p>
+            <p>Cada negocio publica y actualiza sus beneficios desde su panel, así que el catálogo se mantiene al día sin que tengas que buscar en otro lado.</p>
             <span class="benefit-tag">Actualizado</span>
           </article>
         </div>
@@ -134,6 +152,18 @@
         <div class="category-showcase" id="category-showcase" aria-live="polite" aria-busy="true"></div>
       </section>
 
+      <!-- PLAN DE LA SEMANA -->
+      <section class="spotlight-section" id="spotlight-section" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">EL PLAN DE LA SEMANA</p>
+            <h2>Un beneficio,<br><em>todos los detalles.</em></h2>
+          </div>
+          <p class="section-description">Elegido entre los más activados. Condiciones claras antes de sumarte.</p>
+        </div>
+        <div id="spotlight"></div>
+      </section>
+
       <!-- DESTACADOS -->
       <section class="featured-section" id="destacados">
         <div class="section-heading">
@@ -141,7 +171,13 @@
             <p class="section-kicker">LOS MÁS AMADOS</p>
             <h2>Los descuentos que<br><em>todo el mundo usa.</em></h2>
           </div>
-          <p class="section-description">Los beneficios más activados del mes, seleccionados por la comunidad.</p>
+          <div class="featured-aside">
+            <p class="section-description">Los beneficios más activados del mes, seleccionados por la comunidad.</p>
+            <div class="track-controls" aria-label="Navegar destacados">
+              <button class="track-button" id="featured-prev" type="button" aria-label="Destacados anteriores">←</button>
+              <button class="track-button" id="featured-next" type="button" aria-label="Más destacados">→</button>
+            </div>
+          </div>
         </div>
         <div class="featured-track" id="featured-track" aria-live="polite"></div>
       </section>
@@ -217,7 +253,7 @@
             <p class="plan-price"><strong>$0</strong><span>sin cuota, sin tarjeta</span></p>
             <ul class="plan-features">
               <li>Activa códigos ilimitados</li>
-              <li>Descuentos de hasta <span id="plan-max-discount">—</span></li>
+              <li>Beneficios como <span id="plan-max-discount">descuentos reales</span></li>
               <li>Tus canjes siempre a la mano</li>
             </ul>
             <a class="plan-button" href="#ofertas">Empezar gratis</a>
